@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,16 +23,19 @@ class HomePageState extends State<HomePage> {
             ),
             Container(
               alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10.0, top: 10),
-                  child: Text(
-              'Courses',
-              style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 30,
-                    color: Colors.black),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0, top: 10),
+                child: Text(
+                  'Courses',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 30,
+                      color: Colors.black),
+                ),
+              ),
             ),
-                ))
+            SizedBox(height: 10),
+            Filters(),
           ],
         ),
       ),
@@ -123,7 +124,8 @@ class SearchState extends State<Search> {
         children: <Widget>[
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 15.0, left: 25.0, right: 20.0),
+              padding:
+                  const EdgeInsets.only(top: 15.0, left: 25.0, right: 20.0),
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -154,6 +156,50 @@ class SearchState extends State<Search> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class Filters extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => FiltersState();
+}
+
+class FiltersState extends State<Filters> {
+  int tag = 1;
+  List<String> options = [
+    'All Topic',
+    'Popular',
+    'Newest',
+    'Advance',
+
+  ];
+  List myIcons = [
+    Icons.local_fire_department_outlined,
+    Icons.electric_bolt,
+    Icons.star,
+    Icons.bookmark_outlined,
+  ];
+  int? _value = 1;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: List<Widget>.generate(
+        3,
+            (int index) {
+          return ChoiceChip(
+            label: Text('Item $index'),
+            selected: _value == index,
+            onSelected: (bool selected) {
+              setState(() {
+                _value = selected ? index : null;
+              });
+            },
+          );
+        },
+      ).toList(),
     );
   }
 }
